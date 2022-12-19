@@ -22,6 +22,7 @@ set(options
   -DCONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP
   -DCONFIG_LWM2M_CLIENT_UTILS_NEIGHBOUR_CELL_LISTENER
   -DCONFIG_LWM2M_CLIENT_UTILS_CONN_MON_OBJ_SUPPORT
+  -DCONFIG_LWM2M_CLIENT_UTILS_SIGNAL_MEAS_INFO_OBJ_SUPPORT
   -DCONFIG_LTE_LC_TAU_PRE_WARNING_NOTIFICATIONS
   -DCONFIG_LTE_PSM_REQ_RPTAU="10101010"
   -DCONFIG_LTE_PSM_REQ_RAT="00001111"
@@ -50,6 +51,8 @@ target_compile_options(..__nrf__subsys__net__lib__lwm2m_client_utils
 set(includes
 "$ENV{ZEPHYR_BASE}/subsys/net/lib/lwm2m/"
 "$ENV{ZEPHYR_BASE}/../nrfxlib/nrf_modem/include/"
+"$ENV{ZEPHYR_BASE}/../modules/lib/cjson/"
+"$ENV{ZEPHYR_BASE}/../nrf/subsys/net/lib/nrf_cloud/include/"
 "src/"
 )
 

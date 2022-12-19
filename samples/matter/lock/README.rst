@@ -91,6 +91,7 @@ This sample supports the following build types, depending on the selected board:
 
 * ``debug`` -- Debug version of the application - can be used to enable additional features for verifying the application behavior, such as logs or command-line shell.
 * ``release`` -- Release version of the application - can be used to enable only the necessary application functionalities to optimize its performance.
+* ``thread_wifi_switched`` -- Debug version of the application with the ability to switch between Thread and Wi-Fi network support in the field - can be used for the nRF5340 DK with the nRF7002 EK shield attached.
 * ``no_dfu`` -- Debug version of the application without Device Firmware Upgrade feature support - can be used for the nRF52840 DK, nRF5340 DK, nRF7002 DK, and nRF21540 DK.
 
 .. note::
@@ -190,6 +191,10 @@ Button 2:
 
       * If pressed for less than three seconds, it changes the lock state to the opposite one.
       * If pressed for more than three seconds, it starts the NFC tag emulation, enables Bluetooth LE advertising for the predefined period of time (15 minutes by default), and makes the device discoverable over Bluetooth LE.
+
+Button 3:
+    * On the nRF5340 DK when using the ``thread_wifi_switched`` build type: If pressed for more than ten seconds, it switches the running application from Thread or Wi-Fi to the other and factory resets the device.
+    * On other platform or build type: Not available.
 
 .. matter_door_lock_sample_button4_start
 

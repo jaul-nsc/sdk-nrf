@@ -121,7 +121,9 @@ This section provides detailed lists of changes by :ref:`application <applicatio
 nRF9160: Asset Tracker v2
 -------------------------
 
-|no_changes_yet_note|
+* Added:
+
+  * Wi-Fi support for nRF9160 DK + nRF7002 EK configuration.
 
 nRF9160: Serial LTE modem
 -------------------------
@@ -134,6 +136,16 @@ nRF5340 Audio
 * Updated:
 
   * Power module has been re-factored so that it uses upstream Zephyr INA23X sensor driver.
+
+nRF Desktop
+-----------
+
+* Changed:
+
+   * Implemented adjustments to avoid flooding logs:
+
+      * Set the max compiled-in log level to ``warning`` for the Non-Volatile Storage (:kconfig:option:`CONFIG_NVS_LOG_LEVEL`).
+      * Lowered a log level to ``debug`` for the ``Identity x created`` log in the :ref:`nrf_desktop_ble_bond`.
 
 Samples
 =======
@@ -153,6 +165,17 @@ Bluetooth samples
 
     * Fixed a possible out-of-bounds memory access issue in the :c:func:`hid_kbd_state_key_set` and :c:func:`hid_kbd_state_key_clear` functions.
 
+* :ref: `ble_nrf_dm` sample:
+
+  * Added:
+
+    * Support for high-precision distance estimate using more compute-intensive algorithms.
+
+  * Changed:
+
+    * Added energy consumption information to documentation.
+    * Added a documentation section about distance offset calibration.
+
 Bluetooth mesh samples
 ----------------------
 
@@ -161,7 +184,21 @@ Bluetooth mesh samples
 nRF9160 samples
 ---------------
 
-|no_changes_yet_note|
+* :ref:`nrf_cloud_rest_cell_pos_sample` sample:
+
+  * Added:
+
+    * Usage of GCI search option if running modem firmware 1.3.4.
+
+  * Updated:
+
+    * The sample now waits for RRC idle mode before requesting neighbor cell measurements.
+
+* :ref:`lwm2m_client` sample:
+
+  * Added:
+
+    * Support for nRF7002 EK shield and Wi-Fi based location.
 
 Peripheral samples
 ------------------
@@ -187,7 +224,9 @@ Thread samples
 Matter samples
 --------------
 
-|no_changes_yet_note|
+* :ref:`matter_lock_sample`:
+
+  * Added `thread_wifi_switched` build type that enables switching between Thread and Wi-Fi network support in the field.
 
 NFC samples
 -----------
@@ -224,7 +263,8 @@ Drivers
 
 This section provides detailed lists of changes by :ref:`driver <drivers>`.
 
-* |no_changes_yet_note|
+* Reduced log verbosity of :ref:`pmw3360`.
+* Reduced log verbosity of :ref:`paw3212`.
 
 Libraries
 =========
@@ -255,14 +295,22 @@ Bootloader libraries
 Modem libraries
 ---------------
 
-|no_changes_yet_note|
+* :ref:`lib_location` library:
+
+  * Added:
+
+    * Support for the application to send the Wi-Fi access point list to the cloud.
+
+  * Updated:
+
+    * Renamed ``enum location_cellular_ext_result`` to c:enum:`location_ext_result`, because Wi-Fi will use the same enumeration.
 
 Libraries for networking
 ------------------------
 
 * :ref:`lib_fota_download` library:
 
-  * Fixed a bug were the :c:func:`download_client_callback` function was continuing to read the offset value even if :c:func:`dfu_target_offset_get` returned an error.
+  * Fixed a bug where the :c:func:`download_client_callback` function was continuing to read the offset value even if :c:func:`dfu_target_offset_get` returned an error.
   * Fixed a bug where the cleanup of the downloading state was not happening when an error event was raised.
 
 * :ref:`lib_nrf_cloud` library:
@@ -270,6 +318,19 @@ Libraries for networking
   * Updated:
 
     * The MQTT disconnect event is now handled by the FOTA module, allowing for updates to be completed while disconnected and reported properly when reconnected.
+    * GCI search results are now encoded in location requests.
+    * The neighbor cell's time difference value is now encoded in location requests.
+
+* :ref:`lib_nrf_cloud` library:
+
+  * Fixed a bug where the same buffer was incorrectly shared between caching a P-GPS prediction and loading a new one, when external flash was used.
+
+* :ref:`lib_lwm2m_location_assistance` library:
+
+  * Added:
+
+    * Support for Wi-Fi based location through LwM2M.
+    * API for scanning Wi-Fi access points.
 
 Libraries for NFC
 -----------------
@@ -279,7 +340,15 @@ Libraries for NFC
 Other libraries
 ---------------
 
-|no_changes_yet_note|
+* :ref:`lib_location` library:
+
+  * Updated:
+
+    * GNSS filtered ephemerides are no longer used when the :kconfig:option:`CONFIG_NRF_CLOUD_AGPS_FILTERED_RUNTIME` Kconfig option is enabled.
+
+  * Fixed:
+
+    * An issue causing the A-GPS data download to be delayed until the RRC connection release.
 
 * Secure Partition Manager (SPM):
 

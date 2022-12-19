@@ -18,7 +18,9 @@ if(CONF_FILE)
     get_filename_component(CONFIG_FILE_NAME ${CONF_FILE} NAME)
 endif()
 
-if(NOT CONFIG_FILE_NAME STREQUAL "prj_no_dfu.conf")
+if(CONFIG_FILE_NAME STREQUAL "prj_thread_wifi_switched.conf")
+    set(PM_STATIC_YML_FILE ${CMAKE_CURRENT_SOURCE_DIR}/configuration/${BOARD}/pm_static_thread_wifi_switched.yml)
+elseif(NOT CONFIG_FILE_NAME STREQUAL "prj_no_dfu.conf")
     set(PM_STATIC_YML_FILE ${CMAKE_CURRENT_SOURCE_DIR}/configuration/${BOARD}/pm_static_dfu.yml)
 endif()
 
@@ -56,6 +58,10 @@ endif()
 
 if(CONFIG_MCUMGR_SMP_BT)
     target_sources(app PRIVATE ${COMMON_ROOT}/src/dfu_over_smp.cpp)
+endif()
+
+if(CONFIG_THREAD_WIFI_SWITCHING)
+    target_sources(app PRIVATE src/software_images_swapper.cpp)
 endif()
 
 chip_configure_data_model(app
