@@ -41,6 +41,8 @@
 .. _`nrfconnect GitHub organization`: https://github.com/nrfconnect
 .. |ncs_repo| replace:: https://github.com/nrfconnect/sdk-nrf
 .. _`sdk-nrf`: https://github.com/nrfconnect/sdk-nrf
+.. _`ncs-example-application`: https://github.com/nrfconnect/ncs-example-application
+.. _`manifest group filter`: https://github.com/nrfconnect/sdk-nrf/blob/20f40501f69bc9bfd2b321704917da1769411936/west.yml#L42
 
 .. |ncs_nrfxlib_repo| replace:: https://github.com/nrfconnect/sdk-nrfxlib
 .. _`sdk-nrfxlib`: https://github.com/nrfconnect/sdk-nrfxlib
@@ -48,6 +50,15 @@
 .. _`nRF Blinky`: https://github.com/NordicSemiconductor/Android-nRF-Blinky
 
 .. _`Ethernet over RTT for Linux`: https://github.com/doki-nordic/experimental-eth-rtt-link/
+
+.. _`Memfault firmware SDK`: https://github.com/memfault/memfault-firmware-sdk
+.. _`Memfault entry in the manifest`: https://github.com/nrfconnect/sdk-nrf/blob/20f40501f69bc9bfd2b321704917da1769411936/west.yml#L170-L173
+.. _`ANT entry in the manifest`: https://github.com/nrfconnect/sdk-nrf/blob/20f40501f69bc9bfd2b321704917da1769411936/west.yml#L182-L187
+
+.. _`Golioth Zephyr SDK`: https://github.com/golioth/golioth-zephyr-sdk
+.. _`Golioth module.yml`: https://github.com/golioth/golioth-zephyr-sdk/blob/v0.5.0/zephyr/module.yml
+.. _`Golioth west-ncs.yml`: https://github.com/golioth/golioth-zephyr-sdk/blob/v0.5.0/west-ncs.yml
+.. _`Golioth README nRF Connect SDK`: https://github.com/golioth/golioth-zephyr-sdk/tree/v0.5.0#using-with-nrf-connect-sdk
 
 .. _`nrfx`: https://github.com/NordicSemiconductor/nrfx/
 .. _`Changelog for nrfx 2.2.0`: https://github.com/NordicSemiconductor/nrfx/blob/master/CHANGELOG.md#user-content-220---2020-04-28
@@ -100,7 +111,6 @@
 .. _`Matter nRF Connect releases`: https://github.com/nrfconnect/sdk-connectedhomeip/releases
 .. _`Matter Certification Policy`: https://github.com/CHIP-Specifications/connectedhomeip-spec/blob/master/policies/matter_certificate_policy.adoc
 .. _`Kconfig.mcuboot.defaults`: https://github.com/project-chip/connectedhomeip/blob/master/config/nrfconnect/chip-module/Kconfig.mcuboot.defaults
-.. _`Matter specification repository`: https://github.com/CHIP-Specifications/connectedhomeip-spec/blob/master/policies/
 .. _`Matter SDK tagged as v1.0.0`: https://github.com/project-chip/connectedhomeip/releases/tag/v1.0.0
 
 .. _`DCL Quick Start Guide`: https://github.com/zigbee-alliance/distributed-compliance-ledger/blob/master/docs/quickStartGuide.adoc
@@ -155,8 +165,8 @@
 .. _`How to connect to the terminal`: https://nrfconnect.github.io/vscode-nrf-connect/get_started/quick_debug.html
 .. _`Debugging applications for a multi-core System on Chip`: https://nrfconnect.github.io/vscode-nrf-connect/guides/debug_concepts.html
 .. _`west module management`: https://nrfconnect.github.io/vscode-nrf-connect/guides/west_module_management.html
-.. _`Custom launch and debug configurations`: https://nrfconnect.github.io/vscode-nrf-connect/guides/debug_advanced.html
-.. _`Application-specific flash options`: https://nrfconnect.github.io/vscode-nrf-connect/guides/build_customize_config.html
+.. _`Custom launch and debug configurations`: https://nrfconnect.github.io/vscode-nrf-connect/guides/debug_advanced.html#custom-launch-and-debug-configurations
+.. _`Application-specific flash options`: https://nrfconnect.github.io/vscode-nrf-connect/guides/build_customize_config.html#application-specific-flash-options
 
 .. _`Azure SDK for Embedded C`: https://azure.github.io/azure-sdk-for-c/
 
@@ -178,6 +188,7 @@
 
 .. _`known issues page on the main branch`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html
 .. _`known issues for nRF Connect SDK v2.2.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html?v=v2-2-0
+.. _`known issues for nRF Connect SDK v2.1.3`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html?v=v2-1-3
 .. _`known issues for nRF Connect SDK v2.1.2`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html?v=v2-1-2
 .. _`known issues for nRF Connect SDK v2.1.1`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html?v=v2-1-1
 .. _`known issues for nRF Connect SDK v2.1.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/known_issues.html?v=v2-1-0
@@ -249,6 +260,7 @@
 .. _`TF-M secure partition integration guide`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/tfm/integration_guide/services/tfm_secure_partition_addition.html
 
 .. _`Repositories and revisions for v2.2.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.2.0/nrf/introduction.html#repositories-and-revisions
+.. _`Repositories and revisions for v2.1.3`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.3/nrf/introduction.html#repositories-and-revisions
 .. _`Repositories and revisions for v2.1.2`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.2/nrf/introduction.html#repositories-and-revisions
 .. _`Repositories and revisions for v2.1.1`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.1/nrf/introduction.html#repositories-and-revisions
 .. _`Repositories and revisions for v2.1.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.0/nrf/introduction.html#repositories-and-revisions
@@ -260,6 +272,7 @@
 .. _`Repositories and revisions`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.9.0/nrf/introduction.html#repositories-and-revisions
 
 .. _`Modem library changelog for v2.2.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.2.0/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
+.. _`Modem library changelog for v2.1.3`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.3/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
 .. _`Modem library changelog for v2.1.2`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.2/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
 .. _`Modem library changelog for v2.1.1`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.1/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
 .. _`Modem library changelog for v2.1.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.0/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
@@ -271,6 +284,7 @@
 .. _`Modem library changelog for v1.9.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.9.0/nrfxlib/nrf_modem/doc/CHANGELOG.html#nrf-modem-changelog
 
 .. _`LwM2M carrier library changelog for v2.2.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.2.0/nrf/libraries/bin/lwm2m_carrier/CHANGELOG.html#liblwm2m-carrier-changelog
+.. _`LwM2M carrier library changelog for v2.1.3`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.3/nrf/libraries/bin/lwm2m_carrier/CHANGELOG.html#liblwm2m-carrier-changelog
 .. _`LwM2M carrier library changelog for v2.1.2`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.2/nrf/libraries/bin/lwm2m_carrier/CHANGELOG.html#liblwm2m-carrier-changelog
 .. _`LwM2M carrier library changelog for v2.1.1`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.1/nrf/libraries/bin/lwm2m_carrier/CHANGELOG.html#liblwm2m-carrier-changelog
 .. _`LwM2M carrier library changelog for v2.1.0`: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/2.1.0/nrf/libraries/bin/lwm2m_carrier/CHANGELOG.html#liblwm2m-carrier-changelog
@@ -662,6 +676,9 @@
 
 .. _`AWS account`: https://aws.amazon.com/iot/
 .. _`Setting up an AWS account`: https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/
+.. _`Set up your AWS account`: https://docs.aws.amazon.com/iot/latest/developerguide/setting-up.html#aws-registration
+.. _`AWS IoT Core policy examples`: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies.html
+.. _`Security best practices in AWS IoT Core`: https://docs.aws.amazon.com/iot/latest/developerguide/security-best-practices.html
 
 .. _`AWS IoT console`: https://console.aws.amazon.com/iot/home
 .. _`AWS S3 console`: https://console.aws.amazon.com/s3/home
@@ -812,7 +829,7 @@
 
 .. _`Zigbee Alliance`:
 .. _`Connectivity Standards Alliance`: https://csa-iot.org
-.. _`Zigbee Specification`: https://zigbeealliance.org/developer_resources/
+.. _`CSA Specifications Download Request`: https://csa-iot.org/developer-resource/specifications-download-request/
 .. _`Zigbee Cluster Library specification`: https://zigbeealliance.org/wp-content/uploads/2019/12/07-5123-06-zigbee-cluster-library-specification.pdf
 
 .. _`Matter Resource Kit`: https://groups.csa-iot.org/wg/all-users/home/matter-resource-kit
@@ -820,13 +837,14 @@
 .. _`CSA's Testing Providers`: https://csa-iot.org/certification/testing-providers/
 .. _`CSA's Certification Team`: https://csa-iot.org/contact-us/
 .. _`Connectivity Standards Alliance members`: https://csa-iot.org/members/
-.. _`Join CSA`:
-.. _`CSA's Become Member page`: https://csa-iot.org/become-member/
+.. _`Join CSA`: https://csa-iot.org/become-member/
 .. _`CSA Member Resources page`: https://groups.csa-iot.org/wg/all-users/home/member-resources
 .. _`Matter Attestation Form`: https://groups.csa-iot.org/wg/members-all/document/folder/2255
 .. _`Matter Attestation of Security template`: https://groups.csa-iot.org/wg/members-all/document/27432
 .. _`Connectivity Standards Alliance Certification Web Tool`: https://zigbeecertifiedproducts.knack.com/zigbee-certified#home/
 .. _`CSA Certified Products Database`: https://csa-iot.org/csa-iot_products/
+
+.. _`Distributed Compliance Ledger`: https://webui.dcl.csa-iot.org/
 
 .. ### Source: Chocolatey
 
@@ -973,6 +991,7 @@
 .. _`ZBOSS Open Initiative (ZOI)`: https://dsr-zoi.com/
 
 .. _`Git`: https://git-scm.com/
+.. _`Git revisions`: https://git-scm.com/docs/gitrevisions
 
 .. _`Go language package`: https://golang.org/doc/install
 
@@ -1008,9 +1027,6 @@
 .. _`GN website`: https://gn.googlesource.com/gn/#getting-a-binary
 
 .. _`Power Saving Mode (PSM)`: https://www.sharetechnote.com/html/Handbook_LTE_PSM.html
-
-.. _`Distributed Compliance Ledger`:
-.. _`Distributed Compliance Ledger website`: https://webui.dcl.csa-iot.org/
 
 .. _`Leshan Demo Server web UI`:
 .. _`public Leshan Demo Server`: https://leshan.eclipseprojects.io

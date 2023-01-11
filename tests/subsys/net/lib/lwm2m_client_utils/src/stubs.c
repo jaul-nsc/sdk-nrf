@@ -43,10 +43,8 @@ DEFINE_FAKE_VALUE_FUNC(int, lwm2m_engine_register_post_write_callback, const cha
 DEFINE_FAKE_VALUE_FUNC(int, lwm2m_engine_create_obj_inst, const char *);
 DEFINE_FAKE_VALUE_FUNC(int, lwm2m_create_obj_inst, uint16_t, uint16_t,
 		       struct lwm2m_engine_obj_inst **);
-DEFINE_FAKE_VALUE_FUNC(int, lwm2m_path_to_string, char *, size_t, struct lwm2m_obj_path *, int);
 DEFINE_FAKE_VALUE_FUNC(struct lwm2m_engine_obj_inst *, lwm2m_engine_get_obj_inst,
 		       const struct lwm2m_obj_path *);
-DEFINE_FAKE_VALUE_FUNC(int, lwm2m_string_to_path, const char *, struct lwm2m_obj_path *, char);
 DEFINE_FAKE_VALUE_FUNC(int, lwm2m_notify_observer, uint16_t, uint16_t, uint16_t);
 DEFINE_FAKE_VALUE_FUNC(struct lwm2m_ctx *, lwm2m_rd_client_ctx);
 DEFINE_FAKE_VOID_FUNC(lwm2m_rd_client_update);
@@ -92,3 +90,8 @@ DEFINE_FAKE_VALUE_FUNC(int, lwm2m_engine_set_s32, const char *, int32_t);
 DEFINE_FAKE_VALUE_FUNC(int, lwm2m_engine_register_exec_callback, const char *,
 		       lwm2m_engine_execute_cb_t);
 DEFINE_FAKE_VOID_FUNC(engine_trigger_update, bool);
+DEFINE_FAKE_VALUE_FUNC(int, lwm2m_rai_req, enum lwm2m_rai_mode);
+DEFINE_FAKE_VALUE_FUNC(struct net_if*, net_if_lookup_by_dev, const struct device *);
+DEFINE_FAKE_VOID_FUNC(net_mgmt_add_event_callback, struct net_mgmt_event_callback *);
+DEFINE_FAKE_VALUE_FUNC(int, net_mgmt_NET_REQUEST_WIFI_SCAN, uint32_t, struct net_if *,
+		       void *, size_t);

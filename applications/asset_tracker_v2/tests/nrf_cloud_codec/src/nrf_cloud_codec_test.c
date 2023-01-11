@@ -27,14 +27,6 @@ void tearDown(void)
 	cJSON_FreeString(codec.buf);
 }
 
-/* Suite teardown shall finalize with mandatory call to generic_suiteTearDown. */
-extern int generic_suiteTearDown(int num_failures);
-
-int test_suiteTearDown(int num_failures)
-{
-	return generic_suiteTearDown(num_failures);
-}
-
 #define CONF_RECV_EXAMPLE \
 "{"\
 	"\"config\":{"\
@@ -178,13 +170,6 @@ const static struct cloud_data_modem_dynamic modem_dyn_data_example = {
 	.ip = "10.81.183.99",
 	.ts = 1000,
 	.queued = true,
-	.band_fresh = true,
-	.nw_mode_fresh = true,
-	.area_code_fresh = true,
-	.cell_id_fresh = true,
-	.rsrp_fresh = true,
-	.ip_address_fresh = true,
-	.mccmnc_fresh = true,
 };
 
 #define SENSORS_BATCH_EXAMPLE \

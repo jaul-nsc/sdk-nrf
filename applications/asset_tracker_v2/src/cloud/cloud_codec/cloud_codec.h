@@ -172,15 +172,6 @@ struct cloud_data_modem_dynamic {
 	char mccmnc[7];
 	/** Flag signifying that the data entry is to be encoded. */
 	bool queued : 1;
-
-	/** Flags to signify if the corresponding data value is fresh and can be used. */
-	bool area_code_fresh	: 1;
-	bool cell_id_fresh	: 1;
-	bool rsrp_fresh		: 1;
-	bool ip_address_fresh	: 1;
-	bool mccmnc_fresh	: 1;
-	bool band_fresh		: 1;
-	bool nw_mode_fresh	: 1;
 };
 
 struct cloud_data_ui {
@@ -241,11 +232,6 @@ struct cloud_data_agps_request {
 	struct nrf_modem_gnss_agps_data_frame request;
 	/** Flag signifying that the data entry is to be encoded. */
 	bool queued : 1;
-	/** Flag indicating that the ephemerides will only include visible satellites */
-	bool filtered : 1;
-	/** Angle above the horizon to constrain the filtered set to. */
-	uint8_t mask_angle;
-
 };
 struct cloud_data_pgps_request {
 	/** Number of requested predictions. */

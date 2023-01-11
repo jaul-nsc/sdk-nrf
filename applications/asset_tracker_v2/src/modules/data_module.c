@@ -762,12 +762,6 @@ static int agps_request_encode(struct nrf_modem_gnss_agps_data_frame *incoming_r
 	cloud_agps_request.cell = modem_info.network.cellid_dec;
 	cloud_agps_request.area = modem_info.network.area_code.value;
 	cloud_agps_request.queued = true;
-#if defined(CONFIG_LOCATION_MODULE_AGPS_FILTERED)
-	cloud_agps_request.filtered = CONFIG_LOCATION_MODULE_AGPS_FILTERED;
-#endif
-#if defined(CONFIG_LOCATION_MODULE_ELEVATION_MASK)
-	cloud_agps_request.mask_angle = CONFIG_LOCATION_MODULE_ELEVATION_MASK;
-#endif
 
 	err = cloud_codec_encode_agps_request(&codec, &cloud_agps_request);
 	switch (err) {
@@ -1093,10 +1087,8 @@ static void agps_request_handle(struct nrf_modem_gnss_agps_data_frame *incoming_
 	struct nrf_modem_gnss_agps_data_frame request;
 
 	if (incoming_request != NULL) {
-		request.sv_mask_ephe = IS_ENABLED(CONFIG_NRF_CLOUD_PGPS) ?
-				       0u : incoming_request->sv_mask_ephe;
-		request.sv_mask_alm = IS_ENABLED(CONFIG_NRF_CLOUD_PGPS) ?
-				       0u : incoming_request->sv_mask_alm;
+		request.sv_mask_ephe = incoming_request->sv_mask_ephe;
+		request.sv_mask_alm = incoming_request->sv_mask_alm;
 		request.data_flags = incoming_request->data_flags;
 	}
 
@@ -1335,14 +1327,6 @@ static void on_all_states(struct data_msg_data *msg)
 			.mcc = msg->module.modem.data.modem_dynamic.mcc,
 			.mnc = msg->module.modem.data.modem_dynamic.mnc,
 			.ts = msg->module.modem.data.modem_dynamic.timestamp,
-
-			.area_code_fresh = msg->module.modem.data.modem_dynamic.area_code_fresh,
-			.nw_mode_fresh = msg->module.modem.data.modem_dynamic.nw_mode_fresh,
-			.band_fresh = msg->module.modem.data.modem_dynamic.band_fresh,
-			.cell_id_fresh = msg->module.modem.data.modem_dynamic.cell_id_fresh,
-			.rsrp_fresh = msg->module.modem.data.modem_dynamic.rsrp_fresh,
-			.ip_address_fresh = msg->module.modem.data.modem_dynamic.ip_address_fresh,
-			.mccmnc_fresh = msg->module.modem.data.modem_dynamic.mccmnc_fresh,
 			.queued = true
 		};
 

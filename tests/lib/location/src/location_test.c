@@ -12,15 +12,18 @@
 #include <modem/location.h>
 #include <modem/lte_lc.h>
 #include <mock_nrf_modem_at.h>
-#include <cmock_nrf_modem_at.h>
-#include <cmock_nrf_modem_gnss.h>
-#include <cmock_modem_key_mgmt.h>
-#include <cmock_rest_client.h>
+
+#include "cmock_nrf_modem_at.h"
+#include "cmock_nrf_modem_gnss.h"
+#include "cmock_modem_key_mgmt.h"
+#include "cmock_rest_client.h"
 
 /* NOTE: Sleep, e.g. k_sleep(K_MSEC(1)), is used after many location library API
  *       function calls because otherwise some of the threaded work in location library
  *       may not run.
  */
+
+#define HTTPS_PORT 443
 
 static struct location_event_data test_location_event_data = {0};
 static struct nrf_modem_gnss_pvt_data_frame test_pvt_data = {0};
@@ -111,10 +114,6 @@ void setUp(void)
 	k_sem_reset(&event_handler_called_sem);
 
 	mock_nrf_modem_at_Init();
-	cmock_nrf_modem_at_Init();
-	cmock_nrf_modem_gnss_Init();
-	cmock_rest_client_Init();
-	cmock_modem_key_mgmt_Init();
 }
 
 void tearDown(void)
@@ -128,10 +127,6 @@ void tearDown(void)
 	TEST_ASSERT_EQUAL(location_callback_called_expected, location_callback_called_occurred);
 
 	mock_nrf_modem_at_Verify();
-	cmock_nrf_modem_at_Verify();
-	cmock_nrf_modem_gnss_Verify();
-	cmock_rest_client_Verify();
-	cmock_modem_key_mgmt_Verify();
 }
 
 static void location_event_handler(const struct location_event_data *event_data)
@@ -221,6 +216,7 @@ void test_location_init(void)
 	__cmock_nrf_modem_gnss_event_handler_set_ExpectAndReturn(&method_gnss_event_handler, 0);
 	// TODO: Change Ignores to Expects
 	__cmock_modem_key_mgmt_exists_IgnoreAndReturn(0);
+	__cmock_modem_key_mgmt_write_IgnoreAndReturn(0);
 
 	/* TODO: This would be correct but printf syntax is what we receive into the mock
 	 *       so we cannot check that XMODEMSLEEP parameters are correct.
@@ -373,9 +369,9 @@ void test_location_cellular(void)
 
 	/* Select cellular service to be used */
 	rest_req_ctx.url = "here.api"; /* Needs a fix once rest_req_ctx is verified */
-	rest_req_ctx.sec_tag = CONFIG_MULTICELL_LOCATION_HERE_TLS_SEC_TAG;
-	rest_req_ctx.port = CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT;
-	rest_req_ctx.host = CONFIG_MULTICELL_LOCATION_HERE_HOSTNAME;
+	rest_req_ctx.sec_tag = CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG;
+	rest_req_ctx.port = HTTPS_PORT;
+	rest_req_ctx.host = CONFIG_LOCATION_SERVICE_HERE_HOSTNAME;
 
 	err = location_request(&config);
 	TEST_ASSERT_EQUAL(0, err);
@@ -521,9 +517,9 @@ void test_location_request_default(void)
 
 	/* Select cellular service to be used */
 	rest_req_ctx.url = "here.api"; /* Needs a fix once rest_req_ctx is verified */
-	rest_req_ctx.sec_tag = CONFIG_MULTICELL_LOCATION_HERE_TLS_SEC_TAG;
-	rest_req_ctx.port = CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT;
-	rest_req_ctx.host = CONFIG_MULTICELL_LOCATION_HERE_HOSTNAME;
+	rest_req_ctx.sec_tag = CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG;
+	rest_req_ctx.port = HTTPS_PORT;
+	rest_req_ctx.host = CONFIG_LOCATION_SERVICE_HERE_HOSTNAME;
 
 	/* Wait a bit so that NCELLMEAS is sent from location lib before we send a response.
 	 * Otherwise, lte_lc would ignore NCELLMEAS notification because no NCELLMEAS on going
@@ -570,9 +566,9 @@ void test_location_request_mode_all_cellular_gnss(void)
 
 	/* Select cellular service to be used */
 	rest_req_ctx.url = "here.api"; /* Needs a fix once rest_req_ctx is verified */
-	rest_req_ctx.sec_tag = CONFIG_MULTICELL_LOCATION_HERE_TLS_SEC_TAG;
-	rest_req_ctx.port = CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT;
-	rest_req_ctx.host = CONFIG_MULTICELL_LOCATION_HERE_HOSTNAME;
+	rest_req_ctx.sec_tag = CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG;
+	rest_req_ctx.port = HTTPS_PORT;
+	rest_req_ctx.host = CONFIG_LOCATION_SERVICE_HERE_HOSTNAME;
 
 	/* Wait a bit so that NCELLMEAS is sent before we send response */
 	k_sleep(K_MSEC(10000));
@@ -861,9 +857,9 @@ void test_location_cellular_periodic(void)
 
 	/* Select cellular service to be used */
 	rest_req_ctx.url = "here.api"; /* Needs a fix once rest_req_ctx is verified */
-	rest_req_ctx.sec_tag = CONFIG_MULTICELL_LOCATION_HERE_TLS_SEC_TAG;
-	rest_req_ctx.port = CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT;
-	rest_req_ctx.host = CONFIG_MULTICELL_LOCATION_HERE_HOSTNAME;
+	rest_req_ctx.sec_tag = CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG;
+	rest_req_ctx.port = HTTPS_PORT;
+	rest_req_ctx.host = CONFIG_LOCATION_SERVICE_HERE_HOSTNAME;
 
 	err = location_request(&config);
 	TEST_ASSERT_EQUAL(0, err);
@@ -891,9 +887,9 @@ void test_location_cellular_periodic(void)
 
 	/* Select cellular service to be used */
 	rest_req_ctx.url = "here.api"; /* Needs a fix once rest_req_ctx is verified */
-	rest_req_ctx.sec_tag = CONFIG_MULTICELL_LOCATION_HERE_TLS_SEC_TAG;
-	rest_req_ctx.port = CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT;
-	rest_req_ctx.host = CONFIG_MULTICELL_LOCATION_HERE_HOSTNAME;
+	rest_req_ctx.sec_tag = CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG;
+	rest_req_ctx.port = HTTPS_PORT;
+	rest_req_ctx.host = CONFIG_LOCATION_SERVICE_HERE_HOSTNAME;
 
 	__cmock_nrf_modem_at_printf_ExpectAndReturn("AT%%NCELLMEAS", 0);
 	/* Wait a bit more than the interval so that NCELLMEAS is sent before we send response

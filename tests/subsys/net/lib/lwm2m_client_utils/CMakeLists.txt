@@ -9,7 +9,11 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(lwm2m_client_unittest)
 
 FILE(GLOB app_sources src/*.c)
-target_sources(app PRIVATE ${app_sources})
+target_sources(app
+  PRIVATE
+    ${app_sources}
+    $ENV{ZEPHYR_BASE}/subsys/net/lib/lwm2m/lwm2m_util.c
+)
 
 set(options
   -DCONFIG_LWM2M_ENGINE_MAX_PENDING=5
@@ -28,7 +32,6 @@ set(options
   -DCONFIG_LTE_PSM_REQ_RAT="00001111"
   -DCONFIG_LTE_EDRX_REQ_VALUE_LTE_M="0001"
   -DCONFIG_LTE_PTW_VALUE_LTE_M="0000"
-  -DCONFIG_LTE_RAI_REQ_VALUE="4"
   -DCONFIG_DOWNLOAD_CLIENT_BUF_SIZE=2048
   -DCONFIG_DOWNLOAD_CLIENT_STACK_SIZE=4096
   -DCONFIG_LWM2M_FIRMWARE_UPDATE_OBJ_SUPPORT
@@ -37,6 +40,8 @@ set(options
   -DCONFIG_LWM2M_CLIENT_UTILS_MCUBOOT_FLASH_BUF_SIZE=512
   -DCONFIG_LTE_PTW_VALUE_NBIOT="0000"
   -DCONFIG_LTE_EDRX_REQ_VALUE_NBIOT="0010"
+  -DCONFIG_NET_MGMT_EVENT_INFO
+  -DCONFIG_NET_MGMT_EVENT
 )
 
 target_compile_options(app

@@ -74,7 +74,7 @@ manifest:
           - fatfs
           - fff
           - hal_nordic
-          - hal_st # required for ST sensors (unrealted to STM32 MCUs)
+          - hal_st # required for ST sensors (unrelated to STM32 MCUs)
           - hal_wurthelektronik
           - liblc3
           - libmetal
@@ -103,7 +103,7 @@ manifest:
     # changes.
     - name: sdk-hostap
       path: modules/lib/hostap
-      revision: 903c774b73802123e165dc001368406642d47972
+      revision: c1f1e0593d5bde73ba5d512b44fb765472829574
     - name: mcuboot
       repo-path: sdk-mcuboot
       revision: 34b3ac78780f861fb6a6eeffa42e6c7242c4eec9
@@ -115,19 +115,15 @@ manifest:
     - name: nrfxlib
       repo-path: sdk-nrfxlib
       path: nrfxlib
-      revision: 51f60b21b708368be1437c613129a54f4682d593
+      revision: f5abba8a9bd3571e8b79b89a48360d7e5f32f21d
     - name: trusted-firmware-m
       repo-path: sdk-trusted-firmware-m
       path: modules/tee/tf-m/trusted-firmware-m
-      revision: 2b98fc3dfb1f6fb415e62f77812e61306ca93692
-    - name: tfm-mcuboot # This is used by the trusted-firmware-m module.
-      repo-path: sdk-mcuboot
-      path: modules/tee/tfm-mcuboot
-      revision: v1.7.2-ncs3
+      revision: 3017e45d1276ed739ddbd9650546b8bc02748d8a
     - name: matter
       repo-path: sdk-connectedhomeip
       path: modules/lib/matter
-      revision: 9a828bbf44262e37bb560200f59e14af02b9f1a6
+      revision: d6fd524187597a3c59231946bf98c95438bea26f
       submodules:
         - name: nlio
           path: third_party/nlio/repo

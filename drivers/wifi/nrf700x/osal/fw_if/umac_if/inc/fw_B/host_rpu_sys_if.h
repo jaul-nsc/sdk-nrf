@@ -35,7 +35,6 @@
 #define ENABLE_VHT_FORMAT 0x10
 #define ENABLE_CHNL_WIDTH_80MHZ 0x20
 
-#define MAX_TX_TOKENS 5
 #define MAX_TX_AGG_SIZE 16
 #define MAX_RX_BUFS_PER_EVNT 64
 #define MAX_MGMT_BUFS 16
@@ -158,6 +157,7 @@ enum rpu_tput_mode {
 	RPU_TPUT_MODE_VHT,
 	RPU_TPUT_MODE_HE_SU,
 	RPU_TPUT_MODE_HE_ER_SU,
+	RPU_TPUT_MODE_HE_TB,
 	RPU_TPUT_MODE_MAX
 };
 
@@ -685,6 +685,8 @@ struct rpu_conf_params {
 	unsigned int tx_pkt_gap_us;
 	unsigned char wlan_ant_switch_ctrl;
 	unsigned char ble_ant_switch_ctrl;
+	unsigned char ru_tone;
+	unsigned char ru_index;
 } __NRF_WIFI_PKD;
 
 /**
@@ -754,10 +756,8 @@ struct nrf_wifi_cmd_pwr {
 } __NRF_WIFI_PKD;
 
 struct rpu_btcoex {
-	signed int coex_cmd_ctrl;
-	signed int bt_mode;
-	signed int bt_ctrl;
-	struct pta_ext_params pta_params;
+	signed int rpu_msg_id;
+	signed int switch_A;
 } __NRF_WIFI_PKD;
 
 struct nrf_wifi_cmd_btcoex {

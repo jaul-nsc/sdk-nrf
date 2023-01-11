@@ -72,6 +72,16 @@ Matter
 * Added:
 
   * Support for Wi-Fi Network Diagnostic Cluster (which counts the number of packets received and transmitted on the Wi-Fi interface).
+  * Default support for nRF7002 revision B.
+
+* Fixed:
+
+  * Connection timing out when attaching to a Wi-Fi Access Point that requires Wi-Fi Protected Access 3 (WPA3).
+
+* Updated:
+
+  * Default heap implementation to use Zephyr's ``sys_heap`` (:kconfig:option:`CONFIG_CHIP_MALLOC_SYS_HEAP`) to better control the RAM usage of Matter applications.
+  * :ref:`ug_matter_device_certification` page with a section about certification document templates.
 
 See `Matter samples`_ for the list of changes for the Matter samples.
 
@@ -101,7 +111,11 @@ See `Zigbee samples`_ for the list of changes for the Zigbee samples.
 ESB
 ---
 
-|no_changes_yet_note|
+  * Added support for front-end modules.
+  * The ESB module requires linking the :ref:`MPSL library <nrfxlib:mpsl_lib>`.
+  * The number of PPI/DPPI channels used is increased from 3 to 6.
+  * Assigned events 6-7 from the EGU0 instance to the ESB module.
+  * Changed the type parameter of the function :c:func:`esb_set_tx_power` to ``int8_t``.
 
 nRF IEEE 802.15.4 radio driver
 ------------------------------
@@ -128,17 +142,27 @@ nRF9160: Asset Tracker v2
 nRF9160: Serial LTE modem
 -------------------------
 
-|no_changes_yet_note|
+* Added an RFC1350 TFTP client, currently supporting only *READ REQUEST*.
+* Added new AT command #XSHUTDOWN to put nRF9160 SiP to System OFF mode.
+* Added support to nRF Cloud C2D appId "MODEM" and "DEVICE".
 
 nRF5340 Audio
 -------------
 
+* Added:
+
+  * Support for Front End Module nRF21540.
+  * Possibility to create a Public Broadcast Announcement (PBA) needed for Auracast.
+
 * Updated:
 
   * Power module has been re-factored so that it uses upstream Zephyr INA23X sensor driver.
+  * BIS headsets can now switch between two broadcast sources (two hardcoded broadcast names).
 
 nRF Desktop
 -----------
+
+* Added an application log informing about the configuration option value update in the :ref:`nrf_desktop_motion`.
 
 * Changed:
 
@@ -179,10 +203,56 @@ Bluetooth samples
 Bluetooth mesh samples
 ----------------------
 
-|no_changes_yet_note|
+* :ref:`bluetooth_ble_peripheral_lbs_coex` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bt_mesh_chat` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bluetooth_mesh_light` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bluetooth_mesh_light_switch` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bluetooth_mesh_sensor_client` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bluetooth_mesh_sensor_server` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
+
+* :ref:`bluetooth_mesh_light_lc` sample:
+
+  * Updated:
+
+    * Enabled :kconfig:option:`CONFIG_SOC_FLASH_NRF_PARTIAL_ERASE` configuration option.
 
 nRF9160 samples
 ---------------
+
+* :ref:`modem_shell_application` sample:
+
+  * Updated:
+
+    * Timeout command-line arguments for the ``location get`` command changed from integers in milliseconds to floating-point values in seconds.
 
 * :ref:`nrf_cloud_rest_cell_pos_sample` sample:
 
@@ -199,11 +269,31 @@ nRF9160 samples
   * Added:
 
     * Support for nRF7002 EK shield and Wi-Fi based location.
+    * Location events and event handlers.
+
+  * Updated:
+
+    * The sensor module has been simplified.
+      It does not use application events, filtering, or configurable periods anymore.
+
+* :ref:`http_application_update_sample`:
+
+  * Added:
+
+    * Support for the :ref:`liblwm2m_carrier_readme` library.
+
+* Removed:
+
+  * Multicell location sample because of the deprecation of the Multicell location library.
+    Relevant functionality is available through the :ref:`lib_location` library.
 
 Peripheral samples
 ------------------
 
-* Added support for nrf7002 board for :ref:`radio_test`.
+* :ref:`radio_test` sample:
+
+  * Added support for the nRF7002 board.
+  * Fixed sample building with support for the Skyworks front-end module.
 
 Trusted Firmware-M (TF-M) samples
 ---------------------------------
@@ -256,7 +346,11 @@ Wi-Fi samples
 Other samples
 -------------
 
-|no_changes_yet_note|
+* :ref:`esb_prx_ptx` sample:
+
+  * Added:
+
+    * Support for front-end modules and :ref:`zephyr:nrf21540dk_nrf52840`.
 
 Drivers
 =======
@@ -287,6 +381,10 @@ Bluetooth libraries and services
 
   * Fixed a possible memory leak in the :c:func:`bt_gatt_indicate_rpc_handler` function.
 
+* :ref:`bt_le_adv_prov_readme` library:
+
+  * Changed the :kconfig:option:`CONFIG_BT_ADV_PROV_FAST_PAIR_BATTERY_DATA_MODE` Kconfig option (default value) to not include Fast Pair battery data in the Fast Pair advertising payload by default.
+
 Bootloader libraries
 --------------------
 
@@ -300,13 +398,38 @@ Modem libraries
   * Added:
 
     * Support for the application to send the Wi-Fi access point list to the cloud.
+    * Introduced the :kconfig:option:`CONFIG_LOCATION_SERVICE_EXTERNAL` Kconfig option that replaces the following configurations that are removed:
+
+      * ``CONFIG_LOCATION_METHOD_GNSS_AGPS_EXTERNAL``
+      * ``CONFIG_LOCATION_METHOD_GNSS_PGPS_EXTERNAL``
+      * ``CONFIG_LOCATION_METHOD_CELLULAR_EXTERNAL``
+
+      The new configuration handles also Wi-Fi positioning.
 
   * Updated:
 
-    * Renamed ``enum location_cellular_ext_result`` to c:enum:`location_ext_result`, because Wi-Fi will use the same enumeration.
+    * Use of :ref:`lib_multicell_location` library has been removed because the library is deprecated.
+      Relevant functionality from the library is moved to this library.
+      The following features were not copied:
+
+      * Definition of HTTPS port for HERE service, that is :kconfig:option:`CONFIG_MULTICELL_LOCATION_HERE_HTTPS_PORT`.
+      * HERE v1 API.
+      * nRF Cloud CA certificate handling.
+
+    * Renamed ``enum location_cellular_ext_result`` to ``enum location_ext_result``, because Wi-Fi will use the same enumeration.
+    * Renamed ``CONFIG_LOCATION_METHOD_WIFI_SERVICE_NRF_CLOUD`` to :kconfig:option:`CONFIG_LOCATION_SERVICE_NRF_CLOUD`.
+    * Renamed ``CONFIG_LOCATION_METHOD_WIFI_SERVICE_HERE`` to :kconfig:option:`CONFIG_LOCATION_SERVICE_HERE`.
+    * Renamed ``CONFIG_LOCATION_METHOD_WIFI_SERVICE_HERE_API_KEY`` to :kconfig:option:`CONFIG_LOCATION_SERVICE_HERE_API_KEY`.
+    * Renamed ``CONFIG_LOCATION_METHOD_WIFI_SERVICE_HERE_HOSTNAME`` to :kconfig:option:`CONFIG_LOCATION_SERVICE_HERE_HOSTNAME`.
+    * Renamed ``CONFIG_LOCATION_METHOD_WIFI_SERVICE_HERE_TLS_SEC_TAG`` to :kconfig:option:`CONFIG_LOCATION_SERVICE_HERE_TLS_SEC_TAG`.
+    * Improved GNSS assistance data need handling.
 
 Libraries for networking
 ------------------------
+
+* :ref:`lib_multicell_location` library:
+
+  * This library is now deprecated and relevant functionality is available through the :ref:`lib_location` library.
 
 * :ref:`lib_fota_download` library:
 
@@ -332,13 +455,32 @@ Libraries for networking
     * Support for Wi-Fi based location through LwM2M.
     * API for scanning Wi-Fi access points.
 
+  * Removed:
+
+    * Location events and event handlers.
+
 Libraries for NFC
 -----------------
 
-|no_changes_yet_note|
+* :ref:`lib_nfc`
+
+  * Updated:
+
+    * Added the possibility of moving an NFC callback to a thread context.
+    * Added support for zero-latency interrupts for NFC.
+    * Aligned the :file:`ncs/nrf/subsys/nfc/lib/platform.c` file with new library implementation.
 
 Other libraries
 ---------------
+
+* :ref:`lib_contin_array` library:
+
+  * Separated the library from the :ref:`nrf53_audio_app` and moved it to :file:`lib/contin_array`.
+    Updated code and documentation accordingly.
+
+* :ref:`QoS` library:
+
+  * Removed the ``QOS_MESSAGE_TYPES_REGISTER`` macro.
 
 * :ref:`lib_location` library:
 
@@ -355,6 +497,11 @@ Other libraries
   * Removed Secure Partition Manager (SPM) and the Kconfig option ``CONFIG_SPM``.
     It is replaced by the Trusted Firmware-M (TF-M) as the supported trusted execution solution.
     See :ref:`Trusted Firmware-M (TF-M) <ug_tfm>` for more information about the TF-M.
+
+* PCM Mix:
+
+  * PCM mix (Pulse Code Modulation) audio mixer has been moved out of the nRF5340 Audio
+    application, and into lib/pcm_mix.
 
 Common Application Framework (CAF)
 ----------------------------------
@@ -445,6 +592,8 @@ cJSON
 Documentation
 =============
 
-|no_changes_yet_note|
+* Added:
+
+  * Documentation template for the :ref:`Ecosystem integration <Ecosystem_integration>` user guides.
 
 .. |no_changes_yet_note| replace:: No changes since the latest |NCS| release.

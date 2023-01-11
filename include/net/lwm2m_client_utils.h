@@ -198,22 +198,52 @@ int lwm2m_init_connmon(const struct device *dev);
 int lwm2m_init_cellular_connectivity_object(void);
 #endif
 
+enum lwm2m_rai_mode {
+	LWM2M_RAI_MODE_DISABLED	= 0,
+	LWM2M_RAI_MODE_ENABLED	= 1
+};
+
 /**
  * @brief Initialize release assistance indication (RAI) module.
+ *
+ * @return Zero if success, negative error code otherwise.
  */
 int lwm2m_init_rai(void);
 
 /**
  * @brief Set socket option SO_RAI_NO_DATA to bypass
  * RRC Inactivity period and immediately switch to Idle mode.
+ *
+ * @return Zero if success, negative error code otherwise.
  */
 int lwm2m_rai_no_data(void);
 
 /**
  * @brief Set socket option SO_RAI_LAST and send dummy packet to bypass
  * RRC Inactivity period and immediately switch to Idle mode.
+ *
+ * @return Zero if success, negative error code otherwise.
  */
 int lwm2m_rai_last(void);
+
+/**
+ * @brief Get the RAI mode.
+ *
+ * @param mode Pointer to RAI mode variable.
+ *
+ * @return Zero if success, negative error code otherwise.
+ */
+int lwm2m_rai_get(enum lwm2m_rai_mode *mode);
+
+/**
+ * @brief Function for requesting modem to enable or disable
+ * use of AS RAI.
+ *
+ * @param mode Requested RAI mode.
+ *
+ * @return Zero if success, negative error code otherwise.
+ */
+int lwm2m_rai_req(enum lwm2m_rai_mode mode);
 
 /* Advanced firmare object support */
 uint8_t lwm2m_adv_firmware_get_update_state(uint16_t obj_inst_id);
@@ -229,9 +259,33 @@ int lwm2m_adv_firmware_create_inst(const char *component,
 				   lwm2m_engine_execute_cb_t update_callback);
 
 #define LWM2M_OBJECT_ADV_FIRMWARE_ID 33629
-#define LWM2M_ADV_FOTA_CANCELLED 10
-#define LWM2M_ADV_FOTA_DEFERRED 11
+#define RESULT_ADV_FOTA_CANCELLED 10
+#define RESULT_ADV_FOTA_DEFERRED 11
+#define RESULT_ADV_CONFLICT_STATE 12
+#define RESULT_ADV_DEPENDENCY_ERR 13
+
+
+
+/* Firmware resource IDs */
+#define LWM2M_FOTA_PACKAGE_ID 0
+#define LWM2M_FOTA_PACKAGE_URI_ID 1
+#define LWM2M_FOTA_UPDATE_ID 2
+#define LWM2M_FOTA_STATE_ID 3
+#define LWM2M_FOTA_UPDATE_RESULT_ID 5
+#define LWM2M_FOTA_PACKAGE_NAME_ID 6
+#define LWM2M_FOTA_PACKAGE_VERSION_ID 7
+#define LWM2M_FOTA_UPDATE_PROTO_SUPPORT_ID 8
+#define LWM2M_FOTA_UPDATE_DELIV_METHOD_ID 9
+/* LwM2M v1.2 extension which are common for advanced fota */
+#define LWM2M_FOTA_CANCEL_ID 10
+#define LWM2M_FOTA_SEVERITY_ID 11
+#define LWM2M_FOTA_LAST_STATE_CHANGE_TIME_ID 12
+#define LWM2M_FOTA_MAXIMUM_DEFERRED_PERIOD_ID 13
+/* Unique resources for advanced fota */
+#define LWM2M_ADV_FOTA_COMPONENT_NAME_ID 14
 #define LWM2M_ADV_FOTA_CURRENT_VERSION_ID 15
+#define LWM2M_ADV_FOTA_LINKED_INSTANCES_ID 16
+#define LWM2M_ADV_FOTA_CONFLICTING_INSTANCES_ID 17
 
 #ifdef __cplusplus
 }

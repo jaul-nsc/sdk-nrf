@@ -8,11 +8,13 @@
 
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/audio/audio.h>
+#include <zephyr/bluetooth/hci.h>
 #include <../subsys/bluetooth/audio/endpoint.h>
 
 #include "macros_common.h"
 #include "ctrl_events.h"
 #include "audio_datapath.h"
+#include "ble_hci_vsc.h"
 #include "ble_audio_services.h"
 #include "channel_assignment.h"
 
@@ -273,9 +275,19 @@ static void stream_configured_cb(struct bt_audio_stream *stream,
 	}
 
 	if (unicast_group) {
-		ret = bt_audio_stream_qos(headsets[channel_index].headset_conn, unicast_group);
-		if (ret) {
-			LOG_ERR("Unable to set up QoS for headset %d: %d", channel_index, ret);
+#if CONFIG_STREAM_BIDIRECTIONAL
+		if ((headsets[channel_index].sink_stream->ep->status.state ==
+		     BT_AUDIO_EP_STATE_CODEC_CONFIGURED) &&
+		    (headsets[channel_index].source_stream->ep->status.state ==
+		     BT_AUDIO_EP_STATE_CODEC_CONFIGURED))
+#endif
+		{
+			ret = bt_audio_stream_qos(headsets[channel_index].headset_conn,
+						  unicast_group);
+			if (ret) {
+				LOG_ERR("Unable to set up QoS for headset %d: %d", channel_index,
+					ret);
+			}
 		}
 	}
 }
@@ -494,6 +506,11 @@ static void discover_sink_cb(struct bt_conn *conn, struct bt_codec *codec, struc
 		return;
 	}
 
+	if (headsets[channel_index].sink_ep == NULL) {
+		LOG_WRN("No sink endpoints found");
+		return;
+	}
+
 	LOG_DBG("Sink discover complete: err %d", params->err);
 
 	(void)memset(params, 0, sizeof(*params));
@@ -556,6 +573,11 @@ static void discover_source_cb(struct bt_conn *conn, struct bt_codec *codec, str
 
 	if (ep != NULL) {
 		headsets[channel_index].source_ep = ep;
+		return;
+	}
+
+	if (headsets[channel_index].source_ep == NULL) {
+		LOG_WRN("No source endpoints found");
 		return;
 	}
 
@@ -758,8 +780,23 @@ static void connected_cb(struct bt_conn *conn, uint8_t err)
 	}
 
 	/* ACL connection established */
-	/* TODO: Setting TX power for connection if set to anything but 0 */
 	LOG_INF("Connected: %s", addr);
+
+#if (CONFIG_NRF_21540_ACTIVE)
+	uint16_t conn_handle;
+
+	ret = bt_hci_get_conn_handle(conn, &conn_handle);
+	if (ret) {
+		LOG_ERR("Unable to get conn handle");
+	} else {
+		ret = ble_hci_vsc_conn_tx_pwr_set(conn_handle, CONFIG_NRF_21540_MAIN_DBM);
+		if (ret) {
+			LOG_ERR("Failed to set TX power for conn");
+		} else {
+			LOG_INF("\tTX power set to %d dBm", CONFIG_NRF_21540_MAIN_DBM);
+		}
+	}
+#endif /* (CONFIG_NRF_21540_ACTIVE) */
 
 	ret = bt_conn_set_security(conn, BT_SECURITY_L2);
 	if (ret) {
@@ -1054,7 +1091,7 @@ static int initialize(le_audio_receive_cb recv_cb)
 	return 0;
 }
 
-int le_audio_user_defined_button_press(void)
+int le_audio_user_defined_button_press(enum le_audio_user_defined_action action)
 {
 	return 0;
 }

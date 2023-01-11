@@ -34,13 +34,6 @@
 #define UNIX_TIMESTAMP_DUMMY 1670233084418
 
 extern int unity_main(void);
-extern int generic_suiteTearDown(int num_failures);
-
-/* Suite teardown shall finalize with mandatory call to generic_suiteTearDown. */
-int test_suiteTearDown(int num_failures)
-{
-	return generic_suiteTearDown(num_failures);
-}
 
 /* Used to verify that the uut properly sets the value that is returned by date_time_now() to
  * the Current Time resource 3/0/13.
@@ -559,13 +552,6 @@ void test_codec_helpers_set_modem_dynamic_data(void)
 		.apn = "telenor.iot",
 		.ts = 1000,
 		.queued = true,
-		.band_fresh = true,
-		.nw_mode_fresh = true,
-		.area_code_fresh = true,
-		.cell_id_fresh = true,
-		.rsrp_fresh = true,
-		.ip_address_fresh = true,
-		.mccmnc_fresh = true,
 	};
 	int64_t current_time = UNIX_TIMESTAMP_DUMMY;
 	uint8_t bearers[2] = { LTE_FDD_BEARER, NB_IOT_BEARER };

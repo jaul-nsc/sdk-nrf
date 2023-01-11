@@ -185,16 +185,12 @@ For more information, see :ref:`notifications_setup_lwm2m`.
 Sensor Module
 =============
 
-The sample has a sensor module which, if enabled, reads the selected sensors, and updates the client's resource values if it detects a sufficiently large change in one of the values.
-The threshold for a sufficiently large change can be configured.
-For example, a change in temperature of one degree Celsius.
-
+The sample has a sensor module which, if enabled, reads the selected sensors and updates the client's LwM2M resource values.
 Each sensor can be enabled separately.
-The sampling period and change threshold of a sensor can also be configured independently of all the other sensors.
 
 The sensor module is intended to be used together with notifications.
-If notifications are enabled for a Sensor Value resource, and the corresponding sensor is enabled in the sensor module, a notification will be sent only when that value changes significantly (as specified by the change threshold).
-Thus, the bandwidth usage can be significantly limited, while simultaneously registering important changes in sensor values.
+If notifications are enabled for a Sensor Value resource and the corresponding sensor is enabled in the sensor module, a notification will be sent when the value changes.
+The frequency of notification packets is configured by LwM2M attributes set by the server.
 
 See :ref:`sensor_module_options` for information on enabling and configuring the sensor module.
 
@@ -416,7 +412,6 @@ Check and configure the following library options that are used by the sample:
   Used with nRF Cloud to request assistance data for the GNSS module.
 * :kconfig:option:`CONFIG_LWM2M_CLIENT_UTILS_LOCATION_ASSIST_AGPS` - nRF Cloud provides A-GPS assistance data and the GNSS-module in the device uses the data for obtaining a GNSS fix, which is reported back to the LwM2M server.
 * :kconfig:option:`CONFIG_LWM2M_CLIENT_UTILS_LOCATION_ASSIST_PGPS` - nRF Cloud provides P-GPS predictions and the GNSS-module in the device uses the data for obtaining a GNSS fix, which is reported back to the LwM2M server.
-* :kconfig:option:`CONFIG_LWM2M_CLIENT_UTILS_LOCATION_ASSIST_EVENTS` - Disable this option if you provide your own method of sending the assistance requests to the LwM2M server.
 * :kconfig:option:`CONFIG_LWM2M_CLIENT_UTILS_NEIGHBOUR_CELL_LISTENER` - Disable this option if you provide your own method of populating the LwM2M objects (ID 10256) containing the cell neighborhood information.
 
 

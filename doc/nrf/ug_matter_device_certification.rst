@@ -65,8 +65,8 @@ Before you start applying for the Matter certification, you must join CSA, as de
 
 Joining CSA allows you to meet the following requirements:
 
-* Familiarity with the Matter specification, which is the standard for the certification.
-  You can access the specification from the `Matter Resource Kit`_ after you join CSA.
+* Familiarity with the Matter Core Specification, which is the standard for the certification.
+  You can download it from the `CSA Specifications Download Request`_ page.
 * Assignment of Vendor ID (VID), which is required when applying for certification.
   You can apply to `CSA's Certification Team`_ to obtain VID.
   The VID codes are valid immediately upon assignment.
@@ -130,7 +130,7 @@ Matter Attestation of Security
 ++++++++++++++++++++++++++++++
 
 For a Matter component to be certified, CSA's policies require an Attestation of Security that provides detailed information about the security level of the Matter component.
-The attestation document lists robustness security requirements based on the Matter specification.
+The attestation document lists robustness security requirements based on the Matter Core Specification.
 The product developer must indicate the level of compliance and briefly justify the choice.
 
 The attestation must be filled by the person responsible for end product certification who meets the following requirements:
@@ -175,7 +175,7 @@ To be considered of the same family, the other products must meet the following 
 
 * All products must share the same device type as the first product.
 * All products must be variants of the first product, which should also be the most feature complete.
-* All products must conform with the Matter specification, regardless of differences.
+* All products must conform with the Matter specifications, regardless of differences.
 
 .. figure:: images/matter_device_certification_process_pf.svg
    :alt: Matter's Product Family certification overview
@@ -243,6 +243,14 @@ Matter dependent certification inheritance
 If your product uses qualified Bluetooth stack and certified Thread libraries provided as part of the |NCS|, you can *inherit* certification from Nordic Semiconductor, provided that you do not introduce any changes to these stacks.
 In practice, this means reusing Nordic Semiconductor's certification identifiers, which were obtained as a result of the official certification procedures.
 
+.. note::
+   The inheritance is granted by the related SDO after you join the organization and apply for certification by inheritance.
+   The procedure differs from SDO to SDO and has different names.
+   For details, contact the appropriate certification body in the SDO.
+
+Certification identifiers
+-------------------------
+
 Nordic Semiconductor provides the following certification identifiers:
 
 * Bluetooth Qualified Design IDs (Bluetooth QDIDs) - Obtained in accordance with `Bluetooth SIG's Qualification Process`_.
@@ -253,7 +261,15 @@ You can visit the following pages on Nordic Semiconductor Infocenter to check th
 * `nRF5340 DK Compatibility Matrix`_
 * `nRF52840 DK Compatibility Matrix`_
 
+Certification document templates
+--------------------------------
+
+Some of the certification documents require providing information about Nordic Semiconductor's SoCs or the |NCS|.
+To help you with filling in these documents, Nordic Semiconductor can provide you with appropriate templates.
+
+To request and obtain such documents, open a private ticket on `DevZone`_ after you join the related SDO.
+
 .. note::
-   The inheritance is granted by the related SDO after you join the organization and apply for certification by inheritance.
-   The procedure differs from SDO to SDO.
-   For details, contact the appropriate certification body in the SDO.
+   Nordic Semiconductor provides just an example answers based on the reference SDK applications, which may guide you on how to answer to certain platform-related questions.
+   You are still solely responsibility for filling original documents according to a product specifiction.
+   The final approval depends on the Director of Certification in the given Standards Developing Organization (SDO).

@@ -681,6 +681,8 @@ The application uses the following buttons on the supported development kit:
 |               |                                                                                        |
 |               | * Long-pressed during startup: Clears the previously stored bonding information.       |
 |               | * Pressed during playback: Mutes the playback volume.                                  |
+|               | * Pressed on a BIS headset during playback: Change the gateway, if more than one is    |
+|               |   available.                                                                           |
 +---------------+----------------------------------------------------------------------------------------+
 | **RESET**     | Resets the device.                                                                     |
 +---------------+----------------------------------------------------------------------------------------+
@@ -778,7 +780,18 @@ Selecting the BIS mode
 ======================
 
 The CIS mode is the default operating mode for the application.
-You can switch to the BIS mode by adding the ``CONFIG_TRANSPORT_BIS`` Kconfig option set to ``y``  to the :file:`prj.conf` file for the debug version and the :file:`prj_release.conf` file for the release version.
+You can switch to the BIS mode by adding the :kconfig:option:`CONFIG_TRANSPORT_BIS` Kconfig option set to ``y`` to the :file:`prj.conf` file for the debug version and the :file:`prj_release.conf` file for the release version.
+
+Enabling the BIS mode with two gateways
+---------------------------------------
+
+In addition to the standard BIS mode with one gateway, you can also add a second gateway device that the BIS headsets can receive audio stream from.
+To configure the second gateway, add both the :kconfig:option:`CONFIG_TRANSPORT_BIS` and the :kconfig:option:`CONFIG_BT_USE_AUDIO_BROADCAST_NAME_ALT` Kconfig options set to ``y`` to the :file:`prj.conf` file for the debug version and to the :file:`prj_release.conf` file for the release version.
+You can provide an alternative name to the second gateway using the :kconfig:option:`CONFIG_BT_AUDIO_BROADCAST_NAME_ALT` or use the default alternative name.
+
+You build each BIS gateway separately using the normal procedures from :ref:`nrf53_audio_app_building`.
+After building the first gateway, configure the required Kconfig options for the second gateway and build the second gateway firmware.
+Remember to program the two firmware versions to two separate gateway devices.
 
 .. _nrf53_audio_app_configuration_select_bidirectional:
 
@@ -920,7 +933,8 @@ You can build and program the application in one of the following ways:
 * :ref:`nrf53_audio_app_building_standard`.
   Using this method requires building and programming each development kit separately.
 
-You might want to check the :ref:`nRF5340 Audio application known issues <known_issues_nrf5340audio>` before building and programming the application.
+.. note::
+   You might want to check the :ref:`nRF5340 Audio application known issues <known_issues_nrf5340audio>` before building and programming the application.
 
 Testing out of the box
 ======================
@@ -933,6 +947,25 @@ Before building the application, you can verify if the kit is working by complet
 #. Observe **RGB1** (bottom side LEDs around the center opening that illuminate the Nordic Semiconductor logo) turn solid yellow, **OB/EXT** turn solid green, and **LED3** start blinking green.
 
 You can now program the development kits with either gateway or headset firmware before they can be used.
+
+.. _nrf53_audio_app_adding_FEM_support:
+
+Adding FEM support
+==================
+
+You can add support for the nRF21540 front-end module (FEM) to this application by using one of the following options, depending on how you decide to build the application:
+
+* If you opt for :ref:`nrf53_audio_app_building_script`, add the ``--nrf21540`` to the script's building command.
+* If you opt for :ref:`nrf53_audio_app_building_standard`, add the ``-DSHIELD=nrf21540_ek_fwd`` to the ``west build`` command.
+  For example:
+
+  .. code-block:: console
+
+     west build -b nrf5340_audio_dk_nrf5340_cpuapp --pristine -- -DCONFIG_AUDIO_DEV=1 -DSHIELD=nrf21540_ek_fwd -DCONF_FILE=prj_release.conf
+
+You can use the :kconfig:option:`CONFIG_NRF_21540_MAIN_TX_POWER` and :kconfig:option:`CONFIG_NRF_21540_PRI_ADV_TX_POWER` to set the TX power output.
+
+See :ref:`ug_radio_fem` for more information about FEM in the |NCS|.
 
 .. _nrf53_audio_app_building_script:
 
@@ -1129,6 +1162,10 @@ Programming the application
 After building the files for the development kit you want to program, complete the following steps to program the application from the command line:
 
 1. Plug the device into the USB port.
+
+   .. note::
+      |usb_known_issues|
+
 #. Turn on the development kit using the On/Off switch.
 #. Open a command prompt.
 #. Run the following command to print the SEGGER serial number of your development kit:
@@ -1202,6 +1239,10 @@ Testing the default CIS mode
 Complete the following steps to test the unidirectional CIS mode for one gateway and two headset devices:
 
 1. Make sure that the development kits are still plugged into the USB ports and are turned on.
+
+   .. note::
+      |usb_known_issues|
+
    After programming, **RGB2** starts blinking green on every device to indicate the ongoing CPU activity on the network core.
    **LED3** starts blinking green on every device to indicate the ongoing CPU activity on the application core.
 #. Wait for the **LED1** on the gateway to start blinking blue.
@@ -1253,6 +1294,8 @@ Testing the BIS mode is identical to `Testing the default CIS mode`_, except for
 * Pressing the **PLAY/PAUSE** button on the gateway will respectively start or stop the stream for all headsets listening in.
 * Pressing the **BTN 4** button on a headset will change the active audio stream.
   The default configuration of the BIS mode supports two audio streams (left and right).
+* Pressing the **BTN 5** button on a headset will change the gateway source for the audio stream (after `Enabling the BIS mode with two gateways`_).
+  If a second gateway is not present, the headset will not play audio.
 
 .. _nrf53_audio_app_testing_steps_cis_walkie_talkie:
 
@@ -1482,3 +1525,4 @@ Legal notices for the nRF5340 Audio DK
 .. |net_core_hex_note| replace:: The network core for both gateway and headsets is programmed with the precompiled Bluetooth Low Energy Controller binary file :file:`ble5-ctr-rpmsg_<XYZ>.hex`, where *<XYZ>* corresponds to the controller version, for example :file:`ble5-ctr-rpmsg_3216.hex`.
    This file includes the LE Audio Controller Subsystem for nRF53 and is provided in the :file:`applications/nrf5340_audio/bin` directory.
    If :ref:`DFU is enabled <nrf53_audio_app_configuration_configure_fota>`, the subsystem's binary file will be generated in the :file:`build/zephyr/` directory and will be called :file:`net_core_app_signed.hex`.
+.. |usb_known_issues| replace:: Make sure to check the :ref:`nRF5340 Audio application known issues <known_issues_nrf5340audio>` related to serial connection with the USB.
