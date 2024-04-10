@@ -14,7 +14,7 @@ tests:
       nrf5340dk_nrf5340_cpuapp_ns
       nrf54l15pdk_nrf54l15_cpuapp
     extra_args: >
-      SNIPPET="ci;logging;multiprotocol;tcp"
+      SNIPPET="ci;logging;multiprotocol"
     integration_platforms:
       - nrf52840dk_nrf52840
       - nrf52840dongle_nrf52840
@@ -33,7 +33,7 @@ tests:
       nrf5340dk_nrf5340_cpuapp_ns
       nrf54l15pdk_nrf54l15_cpuapp
     extra_args: >
-      SNIPPET="ci;logging;tcp"
+      SNIPPET="ci;logging"
     integration_platforms:
       - nrf52840dk_nrf52840
       - nrf21540dk_nrf52840
@@ -50,7 +50,7 @@ tests:
       nrf5340dk_nrf5340_cpuapp
       nrf5340dk_nrf5340_cpuapp_ns
     extra_args: >
-      SNIPPET="ci;logging;multiprotocol;tcp;usb"
+      SNIPPET="ci;logging;multiprotocol;usb"
     integration_platforms:
       - nrf52840dk_nrf52840
       - nrf21540dk_nrf52840
@@ -92,7 +92,7 @@ tests:
       nrf5340dk_nrf5340_cpuapp_ns
       nrf54l15pdk_nrf54l15_cpuapp
     extra_args: >
-      SNIPPET="ci;tcat;tcp"
+      SNIPPET="ci;tcat"
     integration_platforms:
       - nrf52840dk_nrf52840
       - nrf21540dk_nrf52840
