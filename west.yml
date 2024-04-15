@@ -63,7 +63,7 @@ manifest:
     # https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/zephyr/guides/modules.html
     - name: zephyr
       repo-path: sdk-zephyr
-      revision: 76c76edcbabed3192d5cba95b66e94149d2d1879
+      revision: 70729fcad3c56dd6f84e82c5f2b0b62e99b4301c
       import:
         # In addition to the zephyr repository itself, NCS also
         # imports the contents of zephyr/west.yml at the above
@@ -114,7 +114,7 @@ manifest:
     - name: hostap
       repo-path: sdk-hostap
       path: modules/lib/hostap
-      revision: 51873bba9cf3e462939c67e3ee6638e96e1a80b4
+      revision: 2cc138102a0332caf8fd241869d330e39fb5008c
       userdata:
         ncs:
           upstream-url: https://w1.fi/cgit/hostap/
@@ -148,7 +148,7 @@ manifest:
     - name: nrfxlib
       repo-path: sdk-nrfxlib
       path: nrfxlib
-      revision: 39c4313f419d49a2f4d7fd14ad34da2b7ed8888e
+      revision: 220b37ff8f8981ae687af6598e884538aaeb618a
     - name: trusted-firmware-m
       repo-path: sdk-trusted-firmware-m
       path: modules/tee/tf-m/trusted-firmware-m
@@ -160,7 +160,8 @@ manifest:
     - name: matter
       repo-path: sdk-connectedhomeip
       path: modules/lib/matter
-      revision: eda827619fb7f9fbadd7e9df60b910553c27891c
+      revision: aaf689381ccc012aee4cc8a41ce232f65f0baa9d
+      west-commands: scripts/west/west-commands.yml
       submodules:
         - name: nlio
           path: third_party/nlio/repo
@@ -180,7 +181,7 @@ manifest:
     - name: nrf-802154
       repo-path: sdk-nrf-802154
       path: nrf-802154
-      revision: ee38cef4fd93ed2807f16580754057e3943ab1f5
+      revision: b23a4e2711ec9b00b53cdaba5869cb4587a5d420
       groups:
         - nrf-802154
     - name: dragoon
@@ -202,7 +203,7 @@ manifest:
           compare-by-default: false
     - name: sidewalk
       repo-path: sdk-sidewalk
-      revision: 78c79e7474e499aa4140dffc0e118f4ecd7a0202
+      revision: 3938ec9481a818e0a241fbf198c7d204a4c9a704
       groups:
         - sidewalk
     - name: find-my
@@ -231,7 +232,7 @@ manifest:
     - name: openthread
       repo-path: sdk-openthread
       path: modules/lib/openthread
-      revision: 38418aebe467a12102685af850a15686182aaa81
+      revision: 30aa3e881da21e114950c6160f8c7cc0dc611b76
       userdata:
         ncs:
           upstream-url: https://github.com/openthread/openthread
@@ -256,7 +257,7 @@ manifest:
       remote: memfault
     - name: ant
       repo-path: sdk-ant
-      revision: fcfcd1bc801b0ad2ef08117c7a681514729a5c4b
+      revision: 39a2222ad786ee2f069dde41b16c8bbe775d9484
       remote: ant-nrfconnect
       groups:
         - ant
