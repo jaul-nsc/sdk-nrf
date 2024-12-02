@@ -233,8 +233,8 @@ manifest:
           compare-by-default: false
     - name: openthread
       path: modules/lib/openthread
-      url: https://github.com/jaul-nsc/sdk-openthread.git
-      revision: tcat
+      url: https://github.com/canisLupus1313/openthread.git
+      revision: tcat_test1
     - name: suit-generator
       revision: 8f9ce9039e6fb8584dc915944b2bc275856757c0
       path: modules/lib/suit-generator
