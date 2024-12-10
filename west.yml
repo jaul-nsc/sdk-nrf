@@ -235,7 +235,7 @@ manifest:
     - name: openthread
       path: modules/lib/openthread
       url: https://github.com/canisLupus1313/openthread.git
-      revision: tcat_test1
+      revision: tcat_implementation
     - name: suit-generator
       revision: v2.9.0-rc1
       path: modules/lib/suit-generator
